@@ -4,23 +4,19 @@ from __future__ import annotations
 __author__ = "Sebastian Baum"
 __maintainer__ = "Sebastian Baum"
 __version__ = "1.0.0"
-__credits__ = ["Artur Lacerda  - https://github.com/arturml/mnist-cgan"}
+__credits__ = ["Artur Lacerda  - https://github.com/arturml/mnist-cgan"]
 
+# Insert the source folder
+import sys
+sys.path.insert(0, r"../../src")
+
+#Imports
 import torch
 import torch.nn as nn
 import math
 
-import os.path as path
-import sys
-import inspect
-
-# Insert the abstract class
-currentdir = path.dirname(path.abspath(inspect.getfile(inspect.currentframe())))
-abstractclassdir = path.dirname(path.dirname(currentdir))
-sys.path.insert(0, abstractclassdir)
-
-# Now is the module available
-from generativeModels.abstractBaseClasses import ConditionalGenerativeModel
+# Abstract base class from src folder
+from generative_model_base import ConditionalGenerativeModel
 
 
 class CGanGenerator(nn.Module, ConditionalGenerativeModel):
@@ -37,7 +33,7 @@ class CGanGenerator(nn.Module, ConditionalGenerativeModel):
         assert isinstance(n_z, int) and n_z > 0, 'dimension of latent space must be a positive integer'
         assert isinstance(n_output, tuple) and len(n_output) > 1, 'output dimension must be the dimension of generated output and therefore dimension >1. use (1, x) instead.'
         
-        #Assign varaibles
+        #Assign variables
         super(CGanGenerator, self).__init__()
         self.n_z = n_z
         self.n_output = n_output
