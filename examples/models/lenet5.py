@@ -4,6 +4,7 @@ from __future__ import annotations
 __author__ = "Sebastian Baum"
 __maintainer__ = "Sebastian Baum"
 __version__ = "1.0.0"
+__status__= "Prototype"
 __credits__ = [
     "Richmond Alake - https://towardsdatascience.com/understanding-and-implementing-lenet-5-cnn-architecture-deep-learning-a2d531ebc342"
 ]
@@ -11,7 +12,6 @@ __credits__ = [
 # Imports
 import torch
 import torch.nn as nn
-
 
 class LeNet5(nn.Module):
     """
@@ -45,11 +45,13 @@ class LeNet5(nn.Module):
             nn.Linear(in_features=84, out_features=10),
         )
 
-    def forward(self, x: torch.Tenosr) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
-        Propagates the data threw the net.
+        Defines the computation performed at every call.
+        
+        :param x: The input data for computation.
 
-        :param x: the data to propagate.
+        :return: The result of computation applied to input data.
         """
         x = self.feature_extractor(x)
         x = torch.flatten(x, 1)
