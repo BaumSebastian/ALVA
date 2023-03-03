@@ -4,11 +4,12 @@ from __future__ import annotations
 __author__ = "Sebastian Baum"
 __maintainer__ = "Sebastian Baum"
 __version__ = "1.0.0"
+__status__= "Prototype"
 __credits__ = ["Artur Lacerda  - https://github.com/arturml/mnist-cgan"]
 
 # Insert the source folder
 import sys
-sys.path.insert(0, r"../../src")
+sys.path.append(r"src")
 
 #Imports
 import torch
@@ -17,7 +18,6 @@ import math
 
 # Abstract base class from src folder
 from generative_model_base import ConditionalGenerativeModel
-
 
 class CGanGenerator(nn.Module, ConditionalGenerativeModel):
     def __init__(self, n_z : int, n_output : list[int]) -> CGanGenerator:
@@ -56,12 +56,12 @@ class CGanGenerator(nn.Module, ConditionalGenerativeModel):
 
     def forward(self, z : torch.Tensor, labels : torch.long=None) -> torch.Tensor:
         """
-        Performs a forward pass threw the model.
+        Defines the computation performed at every call.
 
-        :param x: The data to pass forward threw the model.
-        :param label: The conditional labels for cgan. This has to be predefined variable, because the pipeline just provides z.
+        :param z: The input noise for computation.
+        :param label: The label of the calculated data g(z). If you use a conditional GAN for convergence training: Make sure to set labels=None and implement the set_label method from the abstract base class.
         
-        :return: The output of the network.
+        :return: The result of computation applied to input data.
         """
         z = z.view(-1, self.n_z)
 
@@ -121,12 +121,12 @@ class CGanDiscriminator(nn.Module):
 
     def forward(self, x : torch.Tensor, labels : torch.long) -> torch.Tensor:
         """
-        Performs a forward pass threw the model.
+        Defines the computation performed at every call.
 
-        :param x: The data to pass forward threw the model.
-        :param label: The label of the data.
+        :param x: The input data for computation.
+        :param label: The label of the input data.
         
-        :return: The output of the network.
+        :return: The result of computation applied to input data.
         """
         x = x.view(x.size(0), math.prod(self.n_input))
         c = self.label_emb(labels)
