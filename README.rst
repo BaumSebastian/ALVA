@@ -1,6 +1,6 @@
 # ALVA
 Adversarial Latent Vector Adjustment (ALVA)
 
-.. image:: path/filename.png
+.. image:: https://github.com/SirBaum/ALVA/blob/main/docs/readme_pictures/test.png
   :width: 400
   :alt: Alternative text
