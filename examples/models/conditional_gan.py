@@ -12,6 +12,14 @@ import torch
 import torch.nn as nn
 import math
 
+# Import src folder
+import sys
+import os
+from pathlib import Path
+
+home = Path(__file__).parent.parent.parent
+sys.path.append(os.path.join(home, "src"))
+
 # Abstract base class from src folder
 from generative_model_base import ConditionalGenerativeModel
 
