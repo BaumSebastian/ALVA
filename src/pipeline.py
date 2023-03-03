@@ -8,7 +8,7 @@ import numpy as np
 from omegaconf import DictConfig
 
 # Load helper functions
-from generativeModels.abstractBaseClasses import (
+from generative_model_base import (
     is_generative_model,
     is_conditional_generative_model,
     GenerativeModel
