@@ -51,10 +51,10 @@ def binearize_tensor(t : torch.Tensor, threshold:float=.5, min:float=0.0, max:fl
 
 
 def denoise_img(
-    img: torch.Tensor, shape: (int, int, int) = (1, 28, 28)
+    img: torch.Tensor, shape: tuple(int, int, int) = (1, 28, 28)
 ) -> np.array:
     """
-    Preprocesses the image provided as torch.Tensor.
+    Preprocess the image provided as torch.Tensor.
 
     :param img: The tensor to process.
 
