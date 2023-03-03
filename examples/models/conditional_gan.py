@@ -7,11 +7,6 @@ __version__ = "1.0.0"
 __status__ = "Prototype"
 __credits__ = ["Artur Lacerda  - https://github.com/arturml/mnist-cgan"]
 
-# Insert the source folder
-import sys
-
-sys.path.append(r"src")
-
 # Imports
 import torch
 import torch.nn as nn
