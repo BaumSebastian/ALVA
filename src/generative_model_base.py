@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+# Annotations
+__author__ = "Sebastian Baum"
+__maintainer__ = "Sebastian Baum"
+__version__ = "1.0.0"
+__status__ = "Prototype"
+
+# Imports
 import torch
 from abc import ABC, abstractmethod
 
@@ -26,7 +33,7 @@ class ConditionalGenerativeModel(GenerativeModel):
     """
 
     @abstractmethod
-    def set_label(self, label) -> None:
+    def set_label(self, label: torch.LongTensor) -> None:
         """
         Set the label that is required for input of conditional generative models.
 
@@ -35,7 +42,7 @@ class ConditionalGenerativeModel(GenerativeModel):
         pass
 
 
-def is_generative_model(instance):
+def is_generative_model(instance: torch.nn.Module) -> bool:
     """
     Indicates if the instance is an instance of a class, that DIRECTLY inherits the abstract.GenerativeModel class.
 
@@ -46,7 +53,7 @@ def is_generative_model(instance):
     return issubclass(type(instance), GenerativeModel)
 
 
-def is_conditional_generative_model(instance):
+def is_conditional_generative_model(instance: torch.nn.Module) -> bool:
     """
     Indicates if the instance is an instance of a class, that DIRECTLY inherits the abstract.GenerativeModel class.
 
