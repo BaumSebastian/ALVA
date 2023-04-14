@@ -39,27 +39,16 @@ class ImplementationError(Exception):
         super().__init__(message)
 
 
-def initialize_models(
-    classifier_pth: str, generator_pth: str, device: torch.device, target: torch.Tensor
-) -> Tuple(nn.Module, nn.Module):
+def check_implementation(generator: nn.Module, target: torch.Tensor) -> None:
     """
     Initializes the generator and classificator.
 
-    :param classifier_pth: the path to the pth file of the classifier.
-    :param generator_pth: The path to the pth file of the generator.
-    :param device: device where to put the models
+    :param classifier: The classifier.
+    :param generator: The generator.
     :param target: the class that the generator generates.
 
     :return: the initialized models
     """
-    # Load the models
-    classifier, generator = torch.load(classifier_pth).to(device), torch.load(
-        generator_pth
-    ).to(device)
-
-    # Set them in evaluation
-    classifier.eval()
-    generator.eval()
 
     # Check if the class is correct implemented
     if not is_generative_model(generator):
@@ -82,8 +71,6 @@ def initialize_models(
         raise ImplementationError(
             f"The forward method of generator has to be executed with just 1 argument for pipeline. {n_non_optional_args} non optional arguments found"
         )
-
-    return classifier, generator
 
 
 def pipeline(
@@ -193,14 +180,13 @@ def pipeline(
 
 
 def generate_samples(
-    device: str,
-    target: int,
-    classifier_pth: str,
-    generator_pth: str,
+    classifier: nn.Module,
+    generator: nn.Module,
+    device: torch.device,
+    target: torch.Tensor,
     n_generated_samples: int,
-    timeout: int,
-    gradient_type: str,
-    gradient_arguments: dict,
+    epsilon: float,
+    timeout_tries: int,
 ) -> Tuple[
     nn.Module, nn.Module, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor
 ]:
@@ -223,29 +209,21 @@ def generate_samples(
     # Preprocess Parameters
     #######################
 
-    # Set device
-    device = torch.device(device)
-
-    # Set target
-    target = torch.LongTensor([target]).to(device)
-
-    # Check if cuda is available
-    if device == "cuda":
-        assert torch.cuda.is_available(), "Cuda requested, but cuda is not available."
+    # Set target to long tensor if not available.
+    if not isinstance(target, torch.LongTensor):
+        target = torch.LongTensor([target]).to(device)
 
     # Check timeout parameter
-    assert timeout > 0, "timeout has to be an non-negative integer."
+    assert timeout_tries > 0, "timeout has to be an non-negative integer."
     assert (
-        timeout >= n_generated_samples
+        timeout_tries >= n_generated_samples
     ), f"timeout is lower than n_generated_samples. Can not generate #{n_generated_samples} samples."
 
     #####################################
     # Initialize and execute the pipeline
     #####################################
 
-    classifier, generator = initialize_models(
-        classifier_pth, generator_pth, device, target
-    )
+    check_implementation(generator, target)
 
     return (
         classifier,
@@ -256,9 +234,8 @@ def generate_samples(
             device,
             target,
             n_generated_samples,
-            timeout,
-            gradient_type,
-            gradient_arguments,
+            epsilon,
+            timeout_tries,
         ),
     )
 
