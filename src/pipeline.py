@@ -53,7 +53,8 @@ def check_implementation(generator: nn.Module, target: torch.Tensor) -> None:
     # Check if the class is correct implemented
     if not is_generative_model(generator):
         raise ImplementationError(
-            f"Generator has to implement {GenerativeModel.__name__} of {GenerativeModel.__module__}"
+            f"Generator has to implement {GenerativeModel.__name__} of {GenerativeModel.__module__}.py\n"
+            + f"Your model is of type {type(generator)}\nModel: {str(generator)}"
         )
 
     if is_conditional_generative_model(generator):
@@ -266,8 +267,6 @@ def generate_samples_with_iterative_epsilons(
 
     # variable declaration
     n_to_generate = n_generated_samples
-    classifier = None
-    generator = None
     z = []
     y = []
     per_z = []
@@ -275,30 +274,28 @@ def generate_samples_with_iterative_epsilons(
     used_epsilons = torch.zeros(n_generated_samples)
     z_idx = 0
 
-    # exectuing epsilons
+    # executing epsilons
     for epsilon in epsilons:
+        if not isinstance(epsilon, float):
+            epsilon = float(epsilon)
+
         print(f"Try to generate {n_to_generate} samples with epsilon = {epsilon:.6}")
 
         # Set the value and execute pipeline
         n_generated_samples = n_to_generate
-        gradient_arguments["epsilon"] = float(
-            epsilon
-        )  # Value conversion to float is needed, as the dictionary only supports python primitive types
 
-        classifier, generator, pipeline_result = generate_samples(
+        pipeline_result = generate_samples(
+            classifier,
+            generator,
             device,
             target,
-            classifier_pth,
-            generator_pth,
             n_generated_samples,
-            timeout,
-            gradient_type,
-            gradient_arguments,
+            timeout_tries,
+            epsilon,
         )
 
         # Append results
         n_generation_result = len(pipeline_result[0])
-
         if n_generation_result > 0:
             z.append(pipeline_result[0])
             y.append(pipeline_result[1])
@@ -317,6 +314,7 @@ def generate_samples_with_iterative_epsilons(
         if n_to_generate <= 0:
             break
 
+    # Prepare data for return value
     # Only cat if elements are provided, otherwise empty tensor
     if len(z) > 0:
         z, y, per_z, per_y = (
@@ -338,4 +336,4 @@ def generate_samples_with_iterative_epsilons(
     if return_epsilons:
         result.append(used_epsilons)
 
-    return (classifier, generator, tuple(result))
+    return tuple(result)
