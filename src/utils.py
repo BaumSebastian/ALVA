@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+# Annotations
+__author__ = "Sebastian Baum"
+__maintainer__ = "Sebastian Baum"
+__version__ = "1.0.0"
+__status__ = "Prototype"
+
 # File for methods that are used everywhere
 import torch
 import torch.nn as nn
@@ -22,29 +30,33 @@ def D(t1: torch.Tensor, t2: torch.Tensor) -> float:
     """
     return (t1 - t2).norm()
 
-def norm_tensor(t:torch.Tensor, zlb:bool=True) -> torch.Tensor:
+
+def norm_tensor(t: torch.Tensor, zlb: bool = True) -> torch.Tensor:
     """
     Norms tensor, so maximum value is 1.
-    
+
     :param t: The tensor to rescale
     :param zlb: zero lower bound means that the lowest values will be set to 0.
-    
+
     :return: the normed tensor.
-    """  
+    """
     if zlb:
         t -= t.min()
-    
+
     return t / t.abs().max()
 
-def binearize_tensor(t : torch.Tensor, threshold:float=.5, min:float=0.0, max:float=1.0) -> torch.Tensor:
+
+def binearize_tensor(
+    t: torch.Tensor, threshold: float = 0.5, min: float = 0.0, max: float = 1.0
+) -> torch.Tensor:
     """
     binearizes tensor to min and max values based on threshold
-    
+
     :param t: the tensor to binearize
     :param threshold: threshold of bineraization. Default 0.5
     :param min: the value to insert if below threshold. Default 0.0
     :param max: the value to insert if above threshold. Default 1.0
-    
+
     :return binearized tensor.
     """
     return torch.where(t < threshold, torch.Tensor([max]), torch.Tensor([min])).float()
@@ -79,7 +91,6 @@ def moving_average(data, window_size, fill=True):
 
     # go threw data until window reaches end
     for idx in range(len(data) - window_size + 1):
-
         # Store elements from i to i+window_size
         # in list to get the current window
         window = data[idx : idx + window_size]
@@ -96,10 +107,11 @@ def moving_average(data, window_size, fill=True):
 
     return ma
 
+
 def set_random_seed(random_seed: int = 0):
     """
     Sets the random seed on all different python modules.
-    
+
     :param random_seed: The seed to initialize the modules.
     """
     torch.manual_seed(random_seed)
