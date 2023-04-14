@@ -193,16 +193,15 @@ def generate_samples(
     """
     Generates the samples with the pipeline
 
-    :param device: the device to load the data/models
-    :param target: The target label that will be generated.
-    :param classifier_pth: The path to the classifier pth file.
-    :param generator_pth: The path to the generator pth file.
-    :param n_generated_samples: The number of samples that will be tried to generate.
-    :param timeout: The maximum amount of tries to generate.
-    :param gradient_type: The type of gradient method that will be used. -> see gradient_selector
-    :param gradient_arguments: The arguments for gradient method.
+    :param classifier: the classifier that classifies generated sample x
+    :param generator: the generator, that generates x out of z
+    :param device: The device to put the data and networks on
+    :param target: target label of data that will be generated
+    :param n_generated_samples: amount of samples the pipeline will generate.
+    :param epsilon: for FGSM (will be outsources)
+    :param timeout tries: amount of tries before interrupted.
 
-    :return: classifier, generator and 4 tensors with: the original latent variable z, the original prediction y, the perturabed latent variable pert_z and the perturabed prediction perty
+    :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y
     """
 
     #######################
@@ -225,18 +224,14 @@ def generate_samples(
 
     check_implementation(generator, target)
 
-    return (
+    return pipeline(
         classifier,
         generator,
-        pipeline(
-            classifier,
-            generator,
-            device,
-            target,
-            n_generated_samples,
-            epsilon,
-            timeout_tries,
-        ),
+        device,
+        target,
+        n_generated_samples,
+        epsilon,
+        timeout_tries,
     )
 
 
