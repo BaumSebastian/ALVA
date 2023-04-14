@@ -121,6 +121,28 @@ def set_random_seed(random_seed: int = 0):
     np.random.seed(random_seed)
 
 
+def fgsm(
+    data: torch.Tensor, epsilon: float, lower_norm: float = -1, higher_norm: float = 1
+) -> torch.Tensor:
+    """
+    Performs FGSM on data.
+
+    :param data: The original unperturbated data. The tensor requires gradient
+    :param epsilon: epsilon weight value for sign data.
+    :param lower_norm: the lower value for normalizing the data.
+    :param higher_norm: the lower value for normalizing the data.
+
+    :return: The perturbated noise.
+    """
+    # get the gradient
+    data_grad = data.grad.data
+    sign_data_grad = data_grad.sign()
+
+    # perturbate data and normalize it
+    per_data = data + epsilon * sign_data_grad
+    return torch.clamp(per_data, lower_norm, higher_norm)
+
+
 def plot_prediction_switch(per_imgs, imgs, labels, per_labels):
     n = 25
     col = 5
