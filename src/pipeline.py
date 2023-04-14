@@ -79,9 +79,9 @@ def pipeline(
     device: torch.device,
     target: torch.Tensor,
     n_generated_samples: int,
-    epsilon: float,
     timeout_tries: int,
-) -> Tuple(torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor):
+    epsilon: float,
+) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
     """
     Executes the pipeline and generates the samples
 
@@ -90,8 +90,8 @@ def pipeline(
     :param device: The device to put the data and networks on
     :param target: target label of data that will be generated
     :param n_generated_samples: amount of samples the pipeline will generate.
-    :param epsilon: for FGSM (will be outsources)
     :param timeout tries: amount of tries before interrupted.
+    :param epsilon: for FGSM (will be outsources)
 
     :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y
     """
@@ -185,11 +185,9 @@ def generate_samples(
     device: torch.device,
     target: torch.Tensor,
     n_generated_samples: int,
-    epsilon: float,
     timeout_tries: int,
-) -> Tuple[
-    nn.Module, nn.Module, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor
-]:
+    epsilon: float,
+) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
     """
     Generates the samples with the pipeline
 
@@ -198,8 +196,8 @@ def generate_samples(
     :param device: The device to put the data and networks on
     :param target: target label of data that will be generated
     :param n_generated_samples: amount of samples the pipeline will generate.
-    :param epsilon: for FGSM (will be outsources)
     :param timeout tries: amount of tries before interrupted.
+    :param epsilon: for FGSM (will be outsources)
 
     :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y
     """
@@ -230,52 +228,35 @@ def generate_samples(
         device,
         target,
         n_generated_samples,
-        epsilon,
         timeout_tries,
+        epsilon,
     )
 
 
 def generate_samples_with_iterative_epsilons(
-    device: str,
-    target: int,
-    classifier_pth: str,
-    generator_pth: str,
+    classifier: nn.Module,
+    generator: nn.Module,
+    device: torch.device,
+    target: torch.Tensor,
     n_generated_samples: int,
-    timeout: int,
-    gradient_type: str,
-    gradient_arguments: dict,
-    epsilons=None,
+    timeout_tries: int,
+    epsilons: list = None,
     return_epsilons=False,
-) -> Tuple[
-    nn.Module,
-    nn.Module,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-]:
+) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor,]:
     """
-    Generates samples with pipline configured by DictConfig. It uses an interative ascend on epsilon weighting factor for fgsm. ATTENTION: To get the used epsilons, give parameter: return_epsilons = True. Then it returns 5 Tensors (I know bad practice)
+    Generates samples with pipeline configured by DictConfig. It uses an ascend on epsilon weighting factor for fgsm. ATTENTION: To get the used epsilons, give parameter: return_epsilons = True. Then it returns 5 Tensors
 
-    :param device: the device to load the data/models
-    :param target: The target label that will be generated.
-    :param classifier_pth: The path to the classifier pth file.
-    :param generator_pth: The path to the generator pth file.
-    :param n_generated_samples: The number of samples that will be tried to generate.
-    :param timeout: The maximum amount of tries to generate.
-    :param gradient_type: The type of gradient method that will be used. -> see gradient_selector
-    :param gradient_arguments: The arguemnts for gradient method.
-    :param epsilons: If value None, the already implemented list will be used. make sure that the epsilon is iterateable.
+    :param classifier: the classifier that classifies generated sample x
+    :param generator: the generator, that generates x out of z
+    :param device: The device to put the data and networks on
+    :param target: target label of data that will be generated
+    :param n_generated_samples: amount of samples the pipeline will generate.
+    :param timeout_tries: amount of tries before interrupted.
+    :param epsilons: If value None, the already implemented list will be used. make sure that the epsilon is iterable.
     :param return_epsilons: If value true, returns the 5th tensor with used epsilons.
 
-    :return: classifer, generator and 5 (or 4) tensors with: the original latent variable z, the original prediction y, the perturabed latent variable pert_z, the perturabed prediction perty and the list with epsilons used (only if return_epsilons = True).
+    :return: classifier, generator and 5 (or 4) tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z, the perturbated prediction pert_y and the list with epsilons used (only if return_epsilons = True).
     """
-
-    # Check for arguments. This argument need to be set as it will be overwritten.
-    assert (
-        "epsilon" in gradient_arguments
-    ), "You are not using epsilon as gradient argument. Epsilon can not be passed to pipeline."
 
     # Make sure epsilons is set right.
     if epsilons is None:
@@ -283,7 +264,7 @@ def generate_samples_with_iterative_epsilons(
     elif not isinstance(epsilons, list):
         epsilons = [epsilons]
 
-    # variable declaraiton
+    # variable declaration
     n_to_generate = n_generated_samples
     classifier = None
     generator = None
