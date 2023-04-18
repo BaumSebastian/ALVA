@@ -4,6 +4,9 @@
 examples/data/
 .vscode/
 
+# Ignore Markdown format
+.markdownlint.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
