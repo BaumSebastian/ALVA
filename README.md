@@ -5,6 +5,7 @@
 
 - [General](#general)
 - [ALVA Concept](#alva-concept)
+  - [Adversarial Attacks (FGSM)](#adversarial-attacks-fgsm)
 - [How to use ALVA](#how-to-use-alva)
   - [Unconditional Generative Model](#unconditional-generative-model)
   - [Conditional Generative Model](#conditional-generative-model)
@@ -15,19 +16,22 @@ ___
 
 ## General
 
-Adversarial Latent Vector Adjustment (ALVA) is based on following paper: LINK. \
-It addresses two problems in data augmentation domain:
+Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method proposed by the following paper: [insert link]. \
+It addresses two challenges in the field of data augmentation:
 
-- How can I generate data without prior knowledge about the data distribution?
-- How can I make sure that the created data triggers new learning point for the data driven method?
+- How can we generate representative data without any prior knowledge about the underlying data distribution?
+- How can we ensure that the newly generated data will provide new, unseen edge cases and are therefore valuable for further training?
 
-In this paper this is achieved with a combination of Adversarial Attacks (FGSM) and Generative Models (GAN). For more details look into the paper.
+In this paper, the authors propose a method that leverages Adversarial Attacks (FGSM) and Generative Models (GAN) to address these challenges. For a comprehensive understanding of the ALVA, please refer to the original paper above.
 
 ___
 
 ## ALVA Concept
 
-The concept of ALVA relies on the mathematical concept of Adversarial Attacks and requires two differentiable models (Generator and Classificator). \
+The concept of ALVA is based on the mathematical concept of Adversarial Attacks and requires two differentiable models (Generator and Classificator).
+
+### Adversarial Attacks (FGSM)
+
 In the paper of [Goodfellow et. al](https://arxiv.org/abs/1312.6199) they explain the intriguing properties of neural networks and propose a method called Fast Gradient Sign Method (FGSM) to fool a MLP. \
 The basic concept is to perturbate a data entry $x$ with the weighted sign of the derivative of the classification. Formal spoken as follows: \
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
