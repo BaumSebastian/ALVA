@@ -1,18 +1,17 @@
 
-# Adversarial Latent Vector Adjustment (ALVA)
+# Adversarial Latent Vector Adjustment (ALVA) <!-- omit from toc -->
 
-## Table of Contents
+## Table of Content <!-- omit from toc -->
 
-- [Adversarial Latent Vector Adjustment (ALVA)](#adversarial-latent-vector-adjustment-alva)
-  - [Table of Contents](#table-of-contents)
-  - [General](#general)
-  - [ALVA Concept](#alva-concept)
-  - [How to use ALVA](#how-to-use-alva)
-    - [Unconditional Generative Model](#unconditional-generative-model)
-    - [Conditional Generative Model](#conditional-generative-model)
-  - [Alva Example](#alva-example)
-  - [Convergence Training](#convergence-training)
+- [General](#general)
+- [ALVA Concept](#alva-concept)
+- [How to use ALVA](#how-to-use-alva)
+  - [Unconditional Generative Model](#unconditional-generative-model)
+  - [Conditional Generative Model](#conditional-generative-model)
+- [Alva Example](#alva-example)
+- [Convergence Training](#convergence-training)
 
+___
 
 ## General
 
@@ -23,6 +22,8 @@ It addresses two problems in data augmentation domain:
 - How can I make sure that the created data triggers new learning point for the data driven method?
 
 In this paper this is achieved with a combination of Adversarial Attacks (FGSM) and Generative Models (GAN). For more details look into the paper.
+
+___
 
 ## ALVA Concept
 
@@ -42,6 +43,8 @@ $z' = z + \epsilon \cdot sign(\nabla_z J(f_\theta(z, y)))$ \
 An successful attack is described with following illustrations. \
 <img src="docs/readme_pictures/test.png" width = 600 /> \
 Starting from an arbitrary latent vector $z$, we create a a data sample $(x_i, y_i)$ (It is possible to create $x$ and $y$ with a conditional GAN). Afterwards the latent vector will be attacked with $z'$ and a new data entry will be created with $(x_i',y_i)$.
+
+___
 
 ## How to use ALVA
 
@@ -63,7 +66,11 @@ To check if the model is implemented correctly, the method `is_generative_model`
 
 This model needs more information and therefore implement `ConditionalGenerativeModel` from [generative_model_base.py](src/generative_model_base.py).
 
+___
+
 ## Alva Example
+
+___
 
 ## Convergence Training
 
