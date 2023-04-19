@@ -36,7 +36,9 @@ The concept of ALVA is based on the mathematical concept of Adversarial Attacks 
 In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they explain the idea behind adversarial examples and propose a method called Fast Gradient Sign Method  (FGSM) to generate such examples that "fool" a MLP. The fundamental idea behind this method is to modify a data point $x$ by adding a small perturbation obtained by computing the weighted sign of the derivative of the classification function. This can be mathematically expressed as: \
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
 Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y \And C(x') \neq y_i$. The process is illustrated below. \
-<img src="docs/readme_pictures/Goodfellow%20illustration.jpg" alt="Illustration of an FGSM" width = 400 /> \
+<p align="center">
+<img src="docs/readme_pictures/Goodfellow%20illustration.jpg" alt="Illustration of an FGSM" width = 400/>
+<p/>
 The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Previous research (insert link) show that the misclassification is a result of the pixel fluctuation/noise added to $x$.
 
 ### Concept Idea
