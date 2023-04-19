@@ -19,8 +19,7 @@ ___
 
 ## General
 
-Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method proposed by the following paper: [insert link]. \
-It addresses two challenges in the field of data augmentation:
+Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method proposed by the following paper: [insert link]. It addresses two challenges in the field of data augmentation:
 
 - How can we generate representative data without any prior knowledge about the underlying data distribution?
 - How can we ensure that the newly generated data will provide new, unseen edge cases and are therefore valuable for further training?
@@ -35,22 +34,17 @@ The concept of ALVA is based on the mathematical concept of Adversarial Attacks 
 
 ### Related Work
 
-In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they discuss adversarial examples and propose a method called Fast Gradient Sign Method (FGSM) to generate such examples that "fool" a MLP. The fundamental idea behind this method is to modify a data point $x$ by adding a small perturbation obtained by computing the weighted sign of the derivative of the classification function. This can be mathematically expressed as:
+In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they explain the idea behind adversarial examples and propose a method called Fast Gradient Sign Method  (FGSM) to generate such examples that "fool" a MLP. The fundamental idea behind this method is to modify a data point $x$ by adding a small perturbation obtained by computing the weighted sign of the derivative of the classification function. This can be mathematically expressed as: \
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
 Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y \And C(x') \neq y_i$. The process is illustrated below. \
 <img src="docs/readme_pictures/Goodfellow%20illustration.jpg" alt="Illustration of an FGSM" width = 400 /> \
-The original data point, depicted as orange orange, is perturbated based on the gradient (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. \
-To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Previous research (insert link) show that the misclassification is a result of the pixel fluctuation/noise added to $x$.
+The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Previous research (insert link) show that the misclassification is a result of the pixel fluctuation/noise added to $x$.
 
 ### Concept Idea
 
-The idea of ALVA is to use the guidance of FGSM but to To address this issue while still generating valid data, the approach of adversarial attack is extended by employing a generative model (GAN).
-We no longer perturbate the data sample $x$ itself, but the latent vector $z$. To get a misclassification of $x'=G(z')$, where $C(x') \neq y$. \
-This leads to following adaption fo the formula: \
+The concept of ALVA is to leverage the principles of FGSM as a guide to generate new and unseen data. Instead of perturbing the original data sample $x$, the latent vector $z$ of the generative model is manipulated (in this example, we use the generator of a GAN structure). The new data is the $x'=G(z')$, while a misclassification of $x'=G(z')$, where $C(x') \neq y$ is described as successful attack. This leads to following adaption of the FGSM formula: \
 $z' = z + \epsilon \cdot sign(\nabla_z J(f_\theta(z, y)))$ \
-An successful attack is described with following illustrations. \
-<img src="docs/readme_pictures/test.png" width = 600 /> \
-Starting from an arbitrary latent vector $z$, we create a a data sample $(x_i, y_i)$ (It is possible to create $x$ and $y$ with a conditional GAN). Afterwards the latent vector will be attacked with $z'$ and a new data entry will be created with $(x_i',y_i)$.
+Starting from an arbitrary latent vector $z$, we first create a data sample $x$ (Or $(x,y)$ if the generator is conditional) using a generative model. Afterwards we perturbate the latent vector with formula mentioned earlier to obtain $z'$. Using this perturbated latent vector, we generate a new data sample $x'$with the generative model.
 
 ___
 
