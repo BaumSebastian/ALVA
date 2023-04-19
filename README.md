@@ -1,6 +1,12 @@
 
 # Adversarial Latent Vector Adjustment (ALVA) <!-- omit from toc -->
 
+The algorithm ALVA has been implemented for MNIST Dataset. Following pictures have been created, while a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA is a novel data augmentation technique to create guided new unseen data.
+
+<p align="center">
+<img src="docs/readme_pictures/ALVA_result_example.jpg" alt="Example of ALVA results" width = 700/>
+<p/>
+
 ## Table of Content <!-- omit from toc -->
 
 - [General](#general)
@@ -37,7 +43,7 @@ In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they expla
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
 Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y \And C(x') \neq y_i$. The process is illustrated below. \
 <p align="center">
-<img src="docs/readme_pictures/Goodfellow%20illustration.jpg" alt="Illustration of an FGSM" width = 400/>
+<img src="docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 400/>
 <p/>
 The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Previous research (insert link) show that the misclassification is a result of the pixel fluctuation/noise added to $x$.
 
@@ -115,6 +121,7 @@ z, y, per_z, per_y = generate_samples (
       EPSILON
       )
 ```
+
 One parameter will be explained more in detail: The weighting factor `EPSILON`. It is the weighting factor of FGSM. It is not directly the magnitude of the perturbation, but the magnitude of the perturbation of $z$.
 
 See [examples source code](examples/pipeline_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
