@@ -130,5 +130,23 @@ ___
 
 ## Convergence Training
 
-We didn't mentioned it in the paper, but we also investigated the concept of something we call convergence training. \
-We propose convergence training as repeating steps of executing the pipeline of ALVA, add the generated samples to the training dataset of the classificator and repeat the step, until the classificator can't be fooled.
+In addition to the experiments described in the paper, we also investigated a technique we call "convergence training". This involves the following steps:
+
+1. Train a classifier $C$ on a dataset $D$.
+2. Use ALVA to generate $n$ samples from each class in $D$.
+3. Add the generated samples to $D$.
+4. Repeat steps 1-3 until ALVA can no longer "fool" $C$.
+
+We implemented this technique on the MNIST dataset, which contains 60.000 images. We repeated the process step 1-3 100 times, generating 60 fake images per class in each iteration. The goal was to double the size of the original dataset with 60.000 real images and 60.000 fake images. The resulting composition of the dataset is shown in the following graph. Note that the generator was not trained during this process.
+
+<p align="center">
+<img src="docs/readme_pictures/convergence_training/Dataset_Composition.jpeg" alt="Composition of dataset" width = 400/>
+<p/>
+
+This graph shows that ALVA was not able to generate 600 images every iteration, resulting in 1600 missing images. However, we also tracked the prediction accuracy every iteration, as shown in the graph below.
+
+<p align="center">
+<img src="docs/readme_pictures/convergence_training/Accuracy.jpeg" alt="Accuracy on Dataset" width = 700/>
+<p/>
+
+The graph demonstrates that by using convergence training with ALVA, we were able to double the size of the dataset while maintaining a high prediction accuracy on the original dataset (~98%) and a slightly lower accuracy on the expanded dataset (~94.5%). It is important to note that the ALVA method does not have the same properties as FGSM, which can result in a massive decrease in accuracy.
