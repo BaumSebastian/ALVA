@@ -41,7 +41,7 @@ The concept of ALVA is based on the mathematical concept of Adversarial Attacks 
 
 In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they explain the idea behind adversarial examples and propose a method called Fast Gradient Sign Method  (FGSM) to generate such examples that "fool" a MLP. The fundamental idea behind this method is to modify a data point $x$ by adding a small perturbation obtained by computing the weighted sign of the derivative of the classification function. This can be mathematically expressed as: \
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
-Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y \And C(x') \neq y_i$. The process is illustrated below.
+Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y\ \And\ C(x') \neq y_i$. The process is illustrated below.
 <p align="center">
 <img src="docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 500/>
 <p/>
@@ -96,7 +96,7 @@ x = G(z) # Generate 100 mnist samples of class 8.
 To generate the samples you need to `import alva` (from [alva.py](/src/alva.py)). This module implements modules `generate_samples()`.
 
 ```python
-import alva
+from alva import generate_samples
 
 """
 Required parameters:
