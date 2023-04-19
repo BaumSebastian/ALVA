@@ -50,7 +50,7 @@ ___
 
 ## How to use ALVA
 
-First of all, make sure you implement the generative model as defined below. Then use the alva code listed afterwards. For experimental purpose look into [convergence training](#convergence-training) chapter. This resulted in good results, but are not strong elaboratable on new datasets.
+Firstly, it is important to ensure that the generative model is implemented as specified [below](#models). Once the model is implemented, the ALVA code provided can be used. For experimental purposes, it is recommended to examine the [convergence training chapter](#convergence-training), which has yielded promising results. However, it should be noted that these results may not necessarily generalize to new datasets and therefore require further evaluation.
 
 ### Models
 
