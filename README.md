@@ -54,7 +54,7 @@ Firstly, it is important to ensure that the generative model is implemented as s
 
 ### Models
 
-To use ALVA you need first of all a differentiable classificator $C$ and a differentiable generative model $G$. It is assumed that the output of $G(z)$ can be directly passed to the classificator $C$ with $C(G(z))$. While the implementation of $C$ is arbitrary, the generative model $G$ needs to inherit from base  [generative_model_base.py](src/generative_model_base.py) according to if it is [unconditional](#unconditional-generative-model) or [conditional](#conditional-generative-model).
+To utilize ALVA, you require two differentiable models: a classificator $C$ and a generative model $G$. It is required that the output of $G$ can be passed directly to the classificator $C$ with $C(G(z))$. Although the implementation of $C$ is arbitrary, the generative model $G$ must inherit from the [generative_model_base.py](/src/generative_model_base.py) based on whether it is unconditional or conditional.
 
 #### Unconditional Generative Model
 
