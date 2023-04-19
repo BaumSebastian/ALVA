@@ -86,7 +86,37 @@ x = G(z) # Generate 100 mnist samples of class 8.
 
 ### Generate Samples
 
-See [examples](#alva-example) below or see [examples source code](examples/pipeline_example.ipynb).
+To generate the samples you need to `import alva` (from [alva.py](/src/alva.py)). This module implements modules `generate_samples()`.
+
+```python
+import alva
+
+"""
+Required parameters:
+classifier          - The classifier that will be fooled.
+generator           - The generator that will create new data
+DEVICE              - The device where pytorch will be executed.
+TARGET              - The target class that will be generated
+N_GENERATED_SAMPLES - The number of samples to generate
+N_TIMEOUT           - The number of tries before returning
+EPSILON             - Weighting Factor [0,1].
+
+Returns:
+the latent vector z with label y and the perturbated z' with label y'.
+"""
+z, y, per_z, per_y = generate_samples ( 
+      classifier, 
+      generator, 
+      DEVICE, 
+      TARGET, 
+      N_GENERATED_SAMPLES, 
+      N_TIMEOUT, 
+      EPSILON
+      )
+```
+One parameter will be explained more in detail: The weighting factor `EPSILON`. It is the weighting factor of FGSM. It is not directly the magnitude of the perturbation, but the magnitude of the perturbation of $z$.
+
+See [examples source code](examples/pipeline_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
 
 ___
 
