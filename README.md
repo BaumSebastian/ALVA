@@ -3,9 +3,12 @@
 
 The algorithm ALVA has been implemented for MNIST Dataset. Following pictures have been created, while a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA is a novel data augmentation technique to create guided new unseen data.
 
-<p align="center">
-<img src="docs/readme_pictures/ALVA_result_example.jpg" alt="Example of ALVA results" width = 800/>
-<p/>
+|Generated Image $x$ (By ALVA)|![generated image 0](/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
+|-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
+| Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
+| Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|**7**|
+
+*) The predicted label of a fooled MLP (LeNet5-Architecture adaption)
 
 ## Table of Content <!-- omit from toc -->
 
