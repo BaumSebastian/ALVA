@@ -8,7 +8,7 @@ The algorithm ALVA has been implemented for MNIST Dataset. Following pictures ha
 | Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|**7**|
 
-*) The predicted label of a fooled MLP (LeNet5-Architecture adaption)
+*) The predicted label of a reference MLP ([LeNet5 Adaption](/examples/models/lenet5.py))
 
 ## Table of Content <!-- omit from toc -->
 
@@ -48,7 +48,7 @@ Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) =
 <p align="center">
 <img src="docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 500/>
 <p/>
-The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Previous research (insert link) show that the misclassification is a result of the pixel fluctuation/noise added to $x$.
+The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Related work indicates that the misclassification is a result of the pixel fluctuation/noise added to $x$.
 
 ### Concept Idea
 
