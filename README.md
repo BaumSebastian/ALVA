@@ -27,7 +27,7 @@ ___
 
 ## General
 
-Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method proposed by the following paper: [insert link]. It addresses two challenges in the field of data augmentation:
+Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method proposed by the following paper: [link will come]. It addresses two challenges in the field of data augmentation:
 
 - How can we generate representative data without any prior knowledge about the underlying data distribution?
 - How can we ensure that the newly generated data will provide new, unseen edge cases and are therefore valuable for further training?
