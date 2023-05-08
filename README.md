@@ -1,7 +1,7 @@
 
 # Adversarial Latent Vector Adjustment (ALVA) <!-- omit from toc -->
 
-The algorithm ALVA has been implemented for MNIST Dataset. Following pictures have been created, while a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA is a novel data augmentation technique to create guided new unseen data.
+Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method. This repository has implemented ALVA for MNIST Dataset. Following pictures have been created, with a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA creates guided new unseen data.
 
 |Generated Image $x$ (By ALVA)|![generated image 0](/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
 |-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
