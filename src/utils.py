@@ -10,14 +10,15 @@ __status__ = "Prototype"
 import torch
 import torchvision
 
+# Import for plotting
 import matplotlib.pyplot as plt
 import numpy as np
 
-# import cv2 as cv
+# Import for random initialization
 import random
 
 
-def set_random_seed(random_seed: int = 0):
+def set_random_seed(random_seed: int = 0) -> None:
     """
     Sets the random seed on all different python modules.
 
@@ -50,7 +51,22 @@ def fgsm(
     return torch.clamp(per_data, lower_norm, higher_norm)
 
 
-def plot_prediction_switch(per_imgs, imgs, labels, per_labels):
+def plot_prediction_switch(
+    per_imgs: torch.Tensor,
+    imgs: torch.Tensor,
+    labels: torch.Tensor,
+    per_labels: torch.Tensor,
+) -> None:
+    """
+    Plotting prediction switch in 5 times 5 cluster.
+
+    :param per_imgs: The perturbated images to display.
+    :param imgs: The original images to display.
+    :param labels: The original labels to display.
+    :param per_labels: The perturbated images to display.
+
+    :return: None
+    """
     n = 25
     col = 5
     labels = labels[:n]
