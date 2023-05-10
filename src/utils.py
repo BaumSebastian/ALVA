@@ -52,17 +52,17 @@ def fgsm(
 
 
 def plot_prediction_switch(
-    per_imgs: torch.Tensor,
     imgs: torch.Tensor,
     labels: torch.Tensor,
+    per_imgs: torch.Tensor,
     per_labels: torch.Tensor,
 ) -> None:
     """
     Plotting prediction switch in 5 times 5 cluster.
 
-    :param per_imgs: The perturbated images to display.
     :param imgs: The original images to display.
     :param labels: The original labels to display.
+    :param per_imgs: The perturbated images to display.
     :param per_labels: The perturbated images to display.
 
     :return: None
