@@ -1,3 +1,8 @@
+import torch
+from .validate import validate
+import datetime
+
+
 def train(train_loader, model, criterion, optimizer, device):
     """
     Function for the training step of the training loop
