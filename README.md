@@ -127,7 +127,7 @@ z, y, per_z, per_y = generate_samples (
 
 One parameter will be explained more in detail: The weighting factor `EPSILON`. It is the weighting factor of FGSM. It is not directly the magnitude of the perturbation, but the magnitude of the perturbation of $z$.
 
-See [examples source code](examples/pipeline_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
+See [examples source code](examples/alva_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
 
 ___
 
