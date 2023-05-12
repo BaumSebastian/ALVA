@@ -31,7 +31,7 @@ class ImplementationError(Exception):
     """
     Exception raised for errors in implementation.
 
-    :params message: explanation of the error
+    :params message: Explanation of the error.
     """
 
     def __init__(self, message=""):
@@ -44,9 +44,9 @@ def check_implementation(generator: nn.Module, target: torch.Tensor) -> None:
 
     :param classifier: The classifier.
     :param generator: The generator.
-    :param target: the class that the generator generates.
+    :param target: The class that the generator generates.
 
-    :return: the initialized models
+    :return: The initialized models.
     """
 
     # Check if the class is correct implemented
@@ -83,17 +83,17 @@ def pipeline(
     epsilon: float,
 ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
     """
-    Executes the pipeline and generates the samples
+    Executes the pipeline and generates the samples.
 
-    :param classifier: the classifier that classifies generated sample x
-    :param generator: the generator, that generates x out of z
-    :param device: The device to put the data and networks on
-    :param target: target label of data that will be generated
-    :param n_generated_samples: amount of samples the pipeline will generate.
-    :param timeout tries: amount of tries before interrupted.
-    :param epsilon: for FGSM (will be outsources)
+    :param classifier: The classifier that classifies generated sample x.
+    :param generator: The generator, that generates x out of z.
+    :param device: The device to put the data and networks on.
+    :param target: Target label of data that will be generated.
+    :param n_generated_samples: Amount of samples the pipeline will generate.
+    :param timeout tries: Amount of tries before interrupted.
+    :param epsilon: for FGSM (will be outsources).
 
-    :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y
+    :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y.
     """
 
     ######################
@@ -191,15 +191,15 @@ def generate_samples(
     """
     Generates the samples with the pipeline
 
-    :param classifier: the classifier that classifies generated sample x
-    :param generator: the generator, that generates x out of z
-    :param device: The device to put the data and networks on
-    :param target: target label of data that will be generated
-    :param n_generated_samples: amount of samples the pipeline will generate.
-    :param timeout tries: amount of tries before interrupted.
-    :param epsilon: for FGSM (will be outsources)
+    :param classifier: The classifier that classifies generated sample x.
+    :param generator: The generator, that generates x out of z.
+    :param device: The device to put the data and networks on.
+    :param target: Target label of data that will be generated.
+    :param n_generated_samples: Amount of samples the pipeline will generate.
+    :param timeout tries: Amount of tries before interrupted.
+    :param epsilon: For FGSM (will be outsources).
 
-    :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y
+    :return: 4 tensors with: the original latent variable z, the original prediction y, the perturbated latent variable pert_z and the perturbated prediction pert_y.
     """
 
     #######################
@@ -246,12 +246,12 @@ def generate_samples_with_iterative_epsilons(
     """
     Generates samples with pipeline configured by DictConfig. It uses an ascend on epsilon weighting factor for fgsm. ATTENTION: To get the used epsilons, give parameter: return_epsilons = True. Then it returns 5 Tensors
 
-    :param classifier: the classifier that classifies generated sample x
-    :param generator: the generator, that generates x out of z
-    :param device: The device to put the data and networks on
-    :param target: target label of data that will be generated
-    :param n_generated_samples: amount of samples the pipeline will generate.
-    :param timeout_tries: amount of tries before interrupted.
+    :param classifier: The classifier that classifies generated sample x.
+    :param generator: The generator, that generates x out of z.
+    :param device: The device to put the data and networks on.
+    :param target: Target label of data that will be generated.
+    :param n_generated_samples: Amount of samples the pipeline will generate.
+    :param timeout_tries: Amount of tries before interrupted.
     :param epsilons: If value None, the already implemented list will be used. make sure that the epsilon is iterable.
     :param return_epsilons: If value true, returns the 5th tensor with used epsilons.
 

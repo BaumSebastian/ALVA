@@ -55,17 +55,28 @@ def train(
 
 
 def training_loop(
-    model,
-    criterion,
-    optimizer,
-    train_loader,
-    valid_loader,
-    epochs,
-    device,
-    print_every=1,
-):
+    model: torch.nn.Module,
+    criterion: torch.nn,
+    optimizer: torch.optim,
+    train_loader: DataLoader,
+    valid_loader: DataLoader,
+    epochs: int,
+    device: torch.device,
+    print_every: int = 1,
+) -> Tuple(torch.nn.Module, torch.optim, Tuple(float, float, float, float)):
     """
-    Function defining the entire training loop
+    Function defining the entire training loop.
+
+    :param model: the model that will be validated.
+    :param criterion: the criterion to calculate the loss.
+    :param optimizer: the optimizer to optimize the model.
+    :param train_loader: dataloader with training data.
+    :param valid_loader: dataloader with validation data.
+    :param epochs: The number of epochs for training
+    :param device:  The device to put the data and networks on.
+    :param print_every: frequency of printing information.
+
+    :return: The model, the optimizer, Tuple of train-/validation-loss and train-/validation-accuracy.
     """
     # set objects for storing metrics
     best_loss = 1e10
@@ -88,25 +99,45 @@ def training_loop(
             valid_losses.append(valid_loss)
 
         if epoch % print_every == (print_every - 1):
+            # Calculate accuracy
             train_acc = get_accuracy(model, train_loader, device=device)
             valid_acc = get_accuracy(model, valid_loader, device=device)
 
             train_accuracy.append(train_acc)
             valid_accuracy.append(valid_acc)
 
-            print(
-                f"{datetime.now().time().replace(microsecond=0)} --- "
-                f"Epoch: {epoch}\t"
-                f"Train loss: {train_loss:.4f}\t"
-                f"Valid loss: {valid_loss:.4f}\t"
-                f"Train accuracy: {100 * train_acc:.2f}\t"
-                f"Valid accuracy: {100 * valid_acc:.2f}"
+            __print_training_information(
+                epoch, train_loss, valid_loss, train_acc, valid_acc
             )
 
     return (
         model,
         optimizer,
         (train_losses, valid_losses, train_accuracy, valid_accuracy),
+    )
+
+
+def __print_training_information(
+    epoch: int, train_loss: float, valid_loss: float, train_acc: float, valid_acc: float
+) -> None:
+    """
+    Prints the information about the training process.
+
+    :param epoch: The epoch of the training.
+    :param train_loss: The loss of the training.
+    :param valid_loss: The loss of the validation.
+    :param train_acc: The accuracy of the training.
+    :param valid_acc: The accuracy of the training.
+
+    :return: None
+    """
+    print(
+        f"{datetime.now().time().replace(microsecond=0)} --- "
+        f"Epoch: {epoch}\t"
+        f"Train loss: {train_loss:.4f}\t"
+        f"Valid loss: {valid_loss:.4f}\t"
+        f"Train accuracy: {100 * train_acc:.2f}\t"
+        f"Valid accuracy: {100 * valid_acc:.2f}"
     )
 
 

@@ -17,9 +17,9 @@ def fgsm(
     Performs FGSM on data.
 
     :param data: The original unperturbated data. The tensor requires gradient
-    :param epsilon: epsilon weight value for sign data.
-    :param lower_norm: the lower value for normalizing the data.
-    :param higher_norm: the lower value for normalizing the data.
+    :param epsilon: Epsilon weight value for sign data.
+    :param lower_norm: The lower value for normalizing the data.
+    :param higher_norm: The lower value for normalizing the data.
 
     :return: The perturbated noise.
     """
