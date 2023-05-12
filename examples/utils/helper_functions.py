@@ -18,6 +18,26 @@ def set_random_seed(random_seed: int = 0) -> None:
     np.random.seed(random_seed)
 
 
+def unnormalize_tensor(t):
+    return ((t + 1) * 255).type(torch.uint8)
+
+
+def split_tensor_random(x, y, fraction=1 / 6):
+    if fraction > 1:
+        raise ValueError("Fraction can't be greater than 1")
+
+    length = len(x)
+    split = int(length * fraction)
+
+    random_idx = torch.randperm(len(x))
+    return (
+        x[random_idx][:split],
+        y[random_idx][:split],
+        x[random_idx][split:],
+        y[random_idx][split:],
+    )
+
+
 def plot_prediction_switch(
     imgs: torch.Tensor,
     labels: torch.Tensor,
