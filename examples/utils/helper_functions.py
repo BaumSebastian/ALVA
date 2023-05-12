@@ -1,5 +1,21 @@
 import torch
 import torchvision
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Import for random initialization
+import random
+
+
+def set_random_seed(random_seed: int = 0) -> None:
+    """
+    Sets the random seed on all different python modules.
+
+    :param random_seed: The seed to initialize the modules.
+    """
+    torch.manual_seed(random_seed)
+    random.seed(random_seed)
+    np.random.seed(random_seed)
 
 
 def plot_prediction_switch(

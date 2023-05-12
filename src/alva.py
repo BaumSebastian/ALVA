@@ -21,7 +21,7 @@ from generative_model_base import (
     is_conditional_generative_model,
     GenerativeModel,
 )
-from utils import fgsm
+from fgsm import fgsm
 
 # To check if generator has correct forward process
 import inspect
