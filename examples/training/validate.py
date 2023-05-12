@@ -18,14 +18,14 @@ def validate(
     valid_loader: DataLoader, model: torch.nn.Module, criterion, device: torch.device
 ) -> Tuple(torch.nn.Module, float):
     """
-    Function for the validation step of the training loop
+    Function for the validation step of the training loop.
 
-    :param valid_loader: dataloader with validation data
-    :param model: the model that will be validated
-    :param criterion: the criterion to calculate the loss
-    :param device: the device to load the data
+    :param valid_loader: dataloader with validation data.
+    :param model: the model that will be validated.
+    :param criterion: the criterion to calculate the loss.
+    :param device: The device to put the data and networks on.
 
-    :param return: the model and the epoch loss
+    :param return: the model and the epoch loss.
     """
     model.eval()
     running_loss = 0

@@ -1,11 +1,38 @@
+from __future__ import annotations
+
+# Annotations
+__author__ = "Sebastian Baum"
+__maintainer__ = "Sebastian Baum"
+__version__ = "1.0.0"
+__status__ = "Prototype"
+
+# For annotation
+from typing import Tuple
+
+# Imports
 import torch
 from .validate import validate
 import datetime
+from torch.utils.data import DataLoader
 
 
-def train(train_loader, model, criterion, optimizer, device):
+def train(
+    train_loader: DataLoader,
+    model: torch.nn.Module,
+    criterion,
+    optimizer: torch.optim,
+    device: torch.device,
+) -> Tuple(torch.nn.Module, torch.optim, float):
     """
-    Function for the training step of the training loop
+    Function for the training step of the training loop.
+
+    :param train_loader: dataloader with training data.
+    :param model: the model that will be validated.
+    :param criterion: the criterion to calculate the loss.
+    :param optimizer: the optimizer to optimize the model.
+    :param device:  The device to put the data and networks on.
+
+    :return: The model, the optimizer and the epoch loss.
     """
     model.train()
     running_loss = 0
@@ -83,9 +110,17 @@ def training_loop(
     )
 
 
-def get_accuracy(model, data_loader, device):
+def get_accuracy(
+    model: torch.nn.Module, data_loader: DataLoader, device: torch.device
+) -> float:
     """
-    Function for computing the accuracy of the predictions over the entire data_loader
+    Function for computing the accuracy of the predictions over the entire data_loader.
+
+    :param model: the model that will be validated.
+    :param data_loader: dataloader with data.
+    :param device: The device to put the data and networks on.
+
+    :return: accuracy.
     """
 
     correct_pred = 0
