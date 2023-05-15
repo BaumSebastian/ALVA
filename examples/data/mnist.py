@@ -38,13 +38,10 @@ def get_dataset(
     Loads the MNIST Datasets. If not downloaded it downloads the dataset.
 
     :param root: The root directory to the data directory. Default: ".".
-    :param transform: The transformation applied to MNIST. If None is passed, the standard transformation from the method above is applied.
+    :param transform: The transformation applied to MNIST.
     :param download: Downloads the dataset.
     :return: The test and train dataset normalized with -1 and 1 as tensor.
     """
-    if transform == None:
-        transform = get_standard_transformation()
-
     training_data = datasets.MNIST(
         root=root, train=True, download=download, transform=transform
     )
