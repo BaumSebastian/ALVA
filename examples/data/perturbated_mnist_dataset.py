@@ -80,7 +80,7 @@ class PerturbatedMnist(Dataset):
 
     def load_data(self) -> None:
         """
-        Checks the folder and reloads data. If new runs occured, also includes them into data.
+        Checks the folder and reloads data. If new runs occur, also includes them into data.
 
         :return: None.
         """
@@ -95,7 +95,6 @@ class PerturbatedMnist(Dataset):
         self.data = torch.cat((self.origin_data, self.pert_data))
         self.targets = torch.cat((self.origin_target, self.pert_label))
 
-        print(self.data.shape, self.targets.shape)
         # Calculate information
         n_data = len(self.origin_data)
         n_pert_data = len(self.pert_data)
@@ -114,33 +113,21 @@ class PerturbatedMnist(Dataset):
         self,
     ) -> Tuple(torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor):
         """
-        Gets the data from the directoy.
+        Gets the data from the directory.
 
         :return: The data in form of: mnist data tensor, mnist label tensor, perturbated mnist data tensor, perturbated mnist label tensor.
         """
         # Declare variables
-        origin_data, origin_labels = torch.Tensor(), torch.Tensor()
+        origin_data, origin_target = torch.Tensor(), torch.Tensor()
         pert_data, pert_target = torch.Tensor(), torch.Tensor()
 
-        # Get original data
-        # origin_torch_path = f"{self.__origin_dir}/{self.__split}.pt"
-        # if not self.__only_pert:
-        #    if os.path.exists(origin_torch_path):
-        #         origin_data, origin_labels = torch.load(origin_torch_path)
-        #    else:
-        #        warnings.warn(
-        #            f"No original data file {origin_torch_path} found. The original mnist dataset is not included."
-        #        )
-        print(self.__origin_dir)
-        train_data = datasets.MNIST(
+        # Get original mnist data
+        mnist_data = datasets.MNIST(
             self.__origin_dir, True if self.__split == "training" else False, None
         )
-        self.origin_data = train_data.data
-        self.origin_target = train_data.targets
+        origin_data, origin_target = mnist_data.data, mnist_data.targets
 
-        print(self.origin_data.shape, self.origin_target.shape)
-
-        # Get the data from runs
+        # Get the data from convergence training
         pert_data_files = glob.glob(
             f"{self.__pert_dir}/*{self.__split}{self.__pt_file_pattern}"
         )
@@ -150,7 +137,7 @@ class PerturbatedMnist(Dataset):
             pert_data, pert_target = list(zip(*pert_tensor))
             pert_data, pert_target = torch.cat(pert_data), torch.cat(pert_target)
 
-        return origin_data, origin_labels, pert_data, pert_target
+        return origin_data, origin_target, pert_data, pert_target
 
     def __len__(self) -> int:
         """
