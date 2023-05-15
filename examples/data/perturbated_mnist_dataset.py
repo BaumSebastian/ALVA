@@ -109,6 +109,12 @@ class PerturbatedMnist(Dataset):
     def get_perturbated_percentage(self) -> float:
         return self.__perturbatedPercentage
 
+    def get_perturbated_data_dir(self) -> str:
+        """
+        Returns the relative path to the perturbated data.
+        """
+        return self.__pert_dir
+
     def __get_data(
         self,
     ) -> Tuple(torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor):
