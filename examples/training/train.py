@@ -14,6 +14,7 @@ import torch
 from .validate import validate
 import datetime
 from torch.utils.data import DataLoader
+from training.early_stopping import EarlyStopping
 
 
 def train(
@@ -85,6 +86,9 @@ def training_loop(
     train_accuracy = []
     valid_accuracy = []
 
+    # Implement early stopping
+    early_stopper = EarlyStopping(tolerance=5, min_delta=200)
+
     # Train model
     for epoch in range(0, epochs):
         # training
@@ -109,6 +113,10 @@ def training_loop(
             __print_training_information(
                 epoch, train_loss, valid_loss, train_acc, valid_acc
             )
+
+        if early_stopper.early_stop():
+            print(f"Early stopping at epoch #{epoch}")
+            break
 
     return (
         model,
