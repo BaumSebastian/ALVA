@@ -1,7 +1,7 @@
 # For this project
 
 # Ignore Dateset
-examples/data/
+examples/data/*/
 .vscode/
 
 # Ignore Markdown format
