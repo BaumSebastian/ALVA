@@ -60,7 +60,7 @@ class PerturbatedMnist(Dataset):
             )
 
         # Get paths
-        self.__origin_dir = os.path.join(root, mnist_folder)
+        self.__origin_dir = root
         self.__pert_dir = os.path.join(root, pert_mnist_folder)
 
         # Check paths
