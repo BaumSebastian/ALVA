@@ -12,7 +12,7 @@ from typing import Tuple
 # Imports
 import torch
 from torch.utils.data import Dataset
-from data.mnist import get_dataset
+import torchvision.datasets as datasets
 
 import warnings
 import glob
@@ -53,15 +53,15 @@ class PerturbatedMnist(Dataset):
         self.__only_pert = only_pert
 
         # Get folder extension
-        split_folders = ("test", "training", "validation")
+        split_folders = ("test", "training")
         if split not in split_folders:
             raise ValueError(
                 f'Invalid Split. Please select one of following splits: {", ".join(split_folders)}'
             )
 
         # Get paths
-        self.__origin_dir = f"{root}/{mnist_folder}"
-        self.__pert_dir = f"{root}/{pert_mnist_folder}"
+        self.__origin_dir = os.path.join(root, mnist_folder)
+        self.__pert_dir = os.path.join(root, pert_mnist_folder)
 
         # Check paths
         if not os.path.exists(self.__origin_dir) and not self.__only_pert:
@@ -74,7 +74,7 @@ class PerturbatedMnist(Dataset):
 
         # Get the data
         self.data, self.targets = None, None
-        self.origin_data, self.origin_label = None, None
+        self.origin_data, self.origin_target = None, None
         self.pert_data, self.pert_label = None, None
         self.load_data()
 
@@ -86,14 +86,14 @@ class PerturbatedMnist(Dataset):
         """
         (
             self.origin_data,
-            self.origin_label,
+            self.origin_target,
             self.pert_data,
             self.pert_label,
         ) = self.__get_data()
 
         # Combine data to one tensor
         self.data = torch.cat((self.origin_data, self.pert_data))
-        self.targets = torch.cat((self.origin_label, self.pert_label))
+        self.targets = torch.cat((self.origin_target, self.pert_label))
 
         print(self.data.shape, self.targets.shape)
         # Calculate information
@@ -120,7 +120,7 @@ class PerturbatedMnist(Dataset):
         """
         # Declare variables
         origin_data, origin_labels = torch.Tensor(), torch.Tensor()
-        pert_data, pert_label = torch.Tensor(), torch.Tensor()
+        pert_data, pert_target = torch.Tensor(), torch.Tensor()
 
         # Get original data
         # origin_torch_path = f"{self.__origin_dir}/{self.__split}.pt"
@@ -131,7 +131,14 @@ class PerturbatedMnist(Dataset):
         #        warnings.warn(
         #            f"No original data file {origin_torch_path} found. The original mnist dataset is not included."
         #        )
-        train_data, test_data = get_dataset(self.__origin_dir, self.__transform)
+        print(self.__origin_dir)
+        train_data = datasets.MNIST(
+            self.__origin_dir, True if self.__split == "training" else False, None
+        )
+        self.origin_data = train_data.data
+        self.origin_target = train_data.targets
+
+        print(self.origin_data.shape, self.origin_target.shape)
 
         # Get the data from runs
         pert_data_files = glob.glob(
@@ -140,10 +147,10 @@ class PerturbatedMnist(Dataset):
         pert_tensor = [torch.load(file) for file in pert_data_files]
 
         if len(pert_tensor) > 0:
-            pert_data, pert_label = list(zip(*pert_tensor))
-            pert_data, pert_label = torch.cat(pert_data), torch.cat(pert_label)
+            pert_data, pert_target = list(zip(*pert_tensor))
+            pert_data, pert_target = torch.cat(pert_data), torch.cat(pert_target)
 
-        return origin_data, origin_labels, pert_data, pert_label
+        return origin_data, origin_labels, pert_data, pert_target
 
     def __len__(self) -> int:
         """
