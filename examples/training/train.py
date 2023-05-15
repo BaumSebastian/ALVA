@@ -132,7 +132,7 @@ def __print_training_information(
     :return: None
     """
     print(
-        f"{datetime.now().time().replace(microsecond=0)} --- "
+        f"{datetime.datetime.now().time().replace(microsecond=0)} --- "
         f"Epoch: {epoch}\t"
         f"Train loss: {train_loss:.4f}\t"
         f"Valid loss: {valid_loss:.4f}\t"
