@@ -3,10 +3,12 @@
 
 Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method. This repository has implemented ALVA for MNIST Dataset. Following pictures have been created, with a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA creates guided new unseen data.
 
-|Generated Image $x$ (By ALVA)|![generated image 0](/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
+
+|Generated Image $x$ (By ALVA)| ![generated image 0](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_0.png) |![generated image 1](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_9.png)|
 |-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
 | Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|
+
 
 *) The predicted label of a reference MLP ([LeNet5 Adaption](/examples/models/lenet5.py))
 
@@ -46,7 +48,7 @@ In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they expla
 $x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
 Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y\ \And\ C(x') \neq y_i$. The process is illustrated below.
 <p align="center">
-<img src="docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 500/>
+<img src="./docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 500/>
 <p/>
 The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Related work indicates that the misclassification is a result of the pixel fluctuation/noise added to $x$.
 
@@ -143,13 +145,13 @@ In addition to the experiments described in the paper, we also investigated a te
 We implemented this technique on the MNIST dataset, which contains 60.000 images. We repeated the process step 1-3 100 times, generating 60 fake images per class in each iteration. The goal was to double the size of the original dataset with 60.000 real images and 60.000 fake images. The resulting composition of the dataset is shown in the following graph. Note that the generator was not trained during this process.
 
 <p align="center">
-<img src="docs/readme_pictures/convergence_training/Dataset_Composition.jpeg" alt="Composition of dataset" width = 400/>
+<img src="./docs/readme_pictures/convergence_training/Dataset_Composition.jpeg" alt="Composition of dataset" width = 400/>
 <p/>
 
 This graph shows that ALVA was not able to generate 600 images every iteration, resulting in 1600 missing images. However, we also tracked the prediction accuracy every iteration, as shown in the graph below.
 
 <p align="center">
-<img src="docs/readme_pictures/convergence_training/Accuracy.jpeg" alt="Accuracy on Dataset" width = 700/>
+<img src="./docs/readme_pictures/convergence_training/Accuracy.jpeg" alt="Accuracy on Dataset" width = 700/>
 <p/>
 
 The graph demonstrates that by using convergence training with ALVA, we were able to double the size of the dataset while maintaining a high prediction accuracy on the original dataset (~98%) and a slightly lower accuracy on the expanded dataset (~94.5%). It is important to note that the ALVA method does not have the same properties as FGSM, which can result in a massive decrease in accuracy.
