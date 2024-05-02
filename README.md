@@ -3,7 +3,7 @@
 
 Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method. This repository has implemented ALVA for MNIST Dataset. Following pictures have been created, with a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA creates guided new unseen data.
 
-|Generated Image $x$ (By ALVA)|![generated image 0](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](./docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
+|Generated Image $x$ (By ALVA)|![generated image 0](docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](docs/readme_pictures/alva_generation/alva_9.png)|
 |-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
 | Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|
@@ -65,11 +65,11 @@ Firstly, it is important to ensure that the generative model is implemented as s
 
 ### Models
 
-To utilize ALVA, you require two differentiable models: a classificator $C$ and a generative model $G$. It is required that the output of $G$ can be passed directly to the classificator $C$ with $C(G(z))$. Although the implementation of $C$ is arbitrary, the generative model $G$ must inherit from the [generative_model_base.py](/src/generative_model_base.py) based on whether it is unconditional or conditional.
+To utilize ALVA, you require two differentiable models: a classificator $C$ and a generative model $G$. It is required that the output of $G$ can be passed directly to the classificator $C$ with $C(G(z))$. Although the implementation of $C$ is arbitrary, the generative model $G$ must inherit from the [generative_model_base.py](src/generative_model_base.py) based on whether it is unconditional or conditional.
 
 #### Unconditional Generative Model
 
-For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](/src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
+For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
 
 ```python
 n = 100              # Number of latent vectors.
@@ -97,7 +97,7 @@ x = G(z) # Generate 100 mnist samples of class 8.
 
 ### Generate Samples
 
-To generate the samples you need to `import alva` (from [alva.py](/src/alva.py)). This module implements modules `generate_samples()`.
+To generate the samples you need to `import alva` (from [alva.py](src/alva.py)). This module implements modules `generate_samples()`.
 
 ```python
 from alva import generate_samples
