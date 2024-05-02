@@ -71,7 +71,7 @@ To utilize ALVA, you require two differentiable models: a classificator $C$ and 
 
 #### Unconditional Generative Model
 
-For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
+For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src\generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
 
 ```python
 n = 100              # Number of latent vectors.
