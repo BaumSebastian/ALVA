@@ -3,6 +3,7 @@
 # Ignore Dateset
 examples/data/*/
 .vscode/
+experiments/*
 
 # Ignore Markdown format
 .markdownlint.json
