@@ -62,7 +62,7 @@ torchvision==0.15.1+cu118
 tornado==6.3.3
 traitlets==5.9.0
 typing_extensions==4.5.0
-urllib3==1.26.13
+urllib3==1.26.18
 wcwidth==0.2.6
 wheel==0.38.4
 wincertstore==0.2
