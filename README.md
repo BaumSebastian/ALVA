@@ -9,7 +9,7 @@ Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method.
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|
 
 
-*) The predicted label of a reference MLP ([LeNet5 Adaption](/examples/models/lenet5.py))
+*) The predicted label of a reference MLP ([LeNet5 Adaption](https://github.com/BaumSebastian/ALVA/blob/main/examples/models/lenet5.py))
 
 ## Table of Content <!-- omit from toc -->
 
@@ -66,11 +66,11 @@ Firstly, it is important to ensure that the generative model is implemented as s
 
 ### Models
 
-To utilize ALVA, you require two differentiable models: a classificator $C$ and a generative model $G$. It is required that the output of $G$ can be passed directly to the classificator $C$ with $C(G(z))$. Although the implementation of $C$ is arbitrary, the generative model $G$ must inherit from the [generative_model_base.py](src/generative_model_base.py) based on whether it is unconditional or conditional.
+To utilize ALVA, you require two differentiable models: a classificator $C$ and a generative model $G$. It is required that the output of $G$ can be passed directly to the classificator $C$ with $C(G(z))$. Although the implementation of $C$ is arbitrary, the generative model $G$ must inherit from the [generative_model_base.py](https://github.com/BaumSebastian/ALVA/blob/main/src/generative_model_base.py) based on whether it is unconditional or conditional.
 
 #### Unconditional Generative Model
 
-For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
+For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](https://github.com/BaumSebastian/ALVA/blob/main/src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
 
 ```python
 n = 100              # Number of latent vectors.
@@ -78,12 +78,12 @@ z = G.get_noise(n)   # Returns 100 latent vectors of specific shape defined in G
 x = G(z)             # 100 data points.
 ```
 
-This method has been implemented in the [example cgan](examples/models/conditional_gan.py).\
-To check if the model is implemented correctly, the method `is_generative_model` in [generative_model_base.py](src/generative_model_base.py) should return `True`.
+This method has been implemented in the [example cgan](https://github.com/BaumSebastian/ALVA/blob/main/examples/models/conditional_gan.py).\
+To check if the model is implemented correctly, the method `is_generative_model` in [generative_model_base.py](https://github.com/BaumSebastian/ALVA/blob/main/src/generative_model_base.py) should return `True`.
 
 #### Conditional Generative Model
 
-In order to use ALVA for unconditional and conditional generative models, the conditional model needs to implement `get_noise()` from [generative_model_base.py](src/generative_model_base.py) as well as inheriting `ConditionalGenerativeModel` from [generative_model_base.py](src/generative_model_base.py). For implementing `get_noise()` please see the [chapter above](#unconditional-generative-model). To inherit `ConditionalGenerativeModel` the static function `set_label()` has to be implemented. It sets the label for all generation until it is changed via `set_label()` or passed in the `forward` method of the generative model.
+In order to use ALVA for unconditional and conditional generative models, the conditional model needs to implement `get_noise()` from [generative_model_base.py](https://github.com/BaumSebastian/ALVA/blob/main/src/generative_model_base.py) as well as inheriting `ConditionalGenerativeModel` from [generative_model_base.py](https://github.com/BaumSebastian/ALVA/blob/main/src/generative_model_base.py). For implementing `get_noise()` please see the [chapter above](#unconditional-generative-model). To inherit `ConditionalGenerativeModel` the static function `set_label()` has to be implemented. It sets the label for all generation until it is changed via `set_label()` or passed in the `forward` method of the generative model.
 
 ```python
 label_class = 8 # label class refers to the number in MNIST as in example code. 
@@ -98,7 +98,7 @@ x = G(z) # Generate 100 mnist samples of class 8.
 
 ### Generate Samples
 
-To generate the samples you need to `import alva` (from [alva.py](src/alva.py)). This module implements modules `generate_samples()`.
+To generate the samples you need to `import alva` (from [alva.py](https://github.com/BaumSebastian/ALVA/blob/main/src/alva.py)). This module implements modules `generate_samples()`.
 
 ```python
 from alva import generate_samples
@@ -129,7 +129,7 @@ z, y, per_z, per_y = generate_samples (
 
 One parameter will be explained more in detail: The weighting factor `EPSILON`. It is the weighting factor of FGSM. It is not directly the magnitude of the perturbation, but the magnitude of the perturbation of $z$.
 
-See [examples source code](examples/alva_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
+See [examples source code](https://github.com/BaumSebastian/ALVA/blob/main/examples/alva_example.ipynb) for a detailed implementation and example models trained on MNIST dataset.
 
 ___
 
@@ -145,13 +145,13 @@ In addition to the experiments described in the paper, we also investigated a te
 We implemented this technique on the MNIST dataset, which contains 60.000 images. We repeated the process step 1-3 100 times, generating 60 fake images per class in each iteration. The goal was to double the size of the original dataset with 60.000 real images and 60.000 fake images. The resulting composition of the dataset is shown in the following graph. Note that the generator was not trained during this process.
 
 <p align="center">
-<img src="docs/readme_pictures/convergence_training/Dataset_Composition.jpeg" alt="Composition of dataset" width = 400/>
+<img src="https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/convergence_training/Dataset_Composition.jpeg" alt="Composition of dataset" width = 400/>
 <p/>
 
 This graph shows that ALVA was not able to generate 600 images every iteration, resulting in 1600 missing images. However, we also tracked the prediction accuracy every iteration, as shown in the graph below.
 
 <p align="center">
-<img src="docs/readme_pictures/convergence_training/Accuracy.jpeg" alt="Accuracy on Dataset" width = 700/>
+<img src="https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/convergence_training/Accuracy.jpeg" alt="Accuracy on Dataset" width = 700/>
 <p/>
 
 The graph demonstrates that by using convergence training with ALVA, we were able to double the size of the dataset while maintaining a high prediction accuracy on the original dataset (~98%) and a slightly lower accuracy on the expanded dataset (~94.5%). It is important to note that the ALVA method does not have the same properties as FGSM, which can result in a massive decrease in accuracy.
