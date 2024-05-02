@@ -3,8 +3,7 @@
 
 Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method. This repository has implemented ALVA for MNIST Dataset. Following pictures have been created, with a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA creates guided new unseen data.
 
-<<<<<<< HEAD
-|Generated Image $x$ (By ALVA)|![generated image 0](docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](docs/readme_pictures/alva_generation/alva_9.png)|
+|Generated Image $x$ (By ALVA)|![generated image 0](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_9.png)|
 |-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
 | Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|
@@ -57,7 +56,7 @@ The original data point, depicted as orange orange, is perturbated based on the 
 
 The concept of ALVA is to leverage the principles of FGSM as a guide to generate new and unseen data. Instead of perturbing the original data sample $x$, the latent vector $z$ of the generative model is manipulated (in this example, we use the generator of a GAN structure). The new data is the $x^\prime=G(z^\prime)$, while a misclassification of $x^\prime=G(z^\prime)$, where $C(x^\prime) \neq y$ is described as successful attack. This leads to following adaption of the FGSM formula: \
 $z^\prime = z + \epsilon \cdot sign(\nabla_z J(f_\theta(z, y)))$ \
-Starting from an arbitrary latent vector $z$, we first create a data sample $x$ (Or $(x,y)$ if the generator is conditional) using a generative model. Afterwards we perturbate the latent vector with formula mentioned earlier to obtain $z^\prime$. Using this perturbated latent vector, we generate a new data sample $x^\prime$with the generative model.
+Starting from an arbitrary latent vector $z$, we first create a data sample $x$ (Or $(x,y)$ if the generator is conditional) using a generative model. Afterwards we perturbate the latent vector with formula mentioned earlier to obtain $z^\prime$. Using this perturbated latent vector, we generate a new data sample $x^\prime$ with the generative model.
 
 ___
 
@@ -71,7 +70,7 @@ To utilize ALVA, you require two differentiable models: a classificator $C$ and 
 
 #### Unconditional Generative Model
 
-For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src\generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
+For an unconditional generative model, you need to implement the `GenerativeModel` class from [generative_model_base.py](src/generative_model_base.py). To inherit this class, you must implement the static function `get_noise()`. This function is used to obtain a latent vector $z$ according to $G$.
 
 ```python
 n = 100              # Number of latent vectors.
