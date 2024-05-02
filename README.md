@@ -3,7 +3,7 @@
 
 Adversarial Latent Vector Adjustment (ALVA) is a novel data augmentation method. This repository has implemented ALVA for MNIST Dataset. Following pictures have been created, with a LeNet-5 implementation predicted these pictures with the label below each picture. ALVA creates guided new unseen data.
 
-|Generated Image $x$ (By ALVA)|![generated image 0](/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](/docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
+|Generated Image $x$ (By ALVA)|![generated image 0](https://github.com/BaumSebastian/ALVA/blob/main/docs/readme_pictures/alva_generation/alva_0.png)|![generated image 1](./docs/readme_pictures/alva_generation/alva_1.png)|![generated image 2](/docs/readme_pictures/alva_generation/alva_2.png)|![generated image 3](/docs/readme_pictures/alva_generation/alva_3.png)|![generated image 4](/docs/readme_pictures/alva_generation/alva_4.png)|![generated image 5](/docs/readme_pictures/alva_generation/alva_5.png)|![generated image 6](/docs/readme_pictures/alva_generation/alva_6.png)|![generated image 7](/docs/readme_pictures/alva_generation/alva_7.png)|![generated image 8](/docs/readme_pictures/alva_generation/alva_8.png)|![generated image 9](/docs/readme_pictures/alva_generation/alva_9.png)|
 |-----| :--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |:--: |
 | Original  Label $y$ |0|1|2|3|4|5|6|7|8|9|
 | Predicted Label* $\hat y$ |**7**|**7**|**7**|**7**|**7**|**7**|**7**|**3**|**7**|**7**|
@@ -43,18 +43,19 @@ The concept of ALVA is based on the mathematical concept of Adversarial Attacks 
 ### Related Work
 
 In the paper by [Goodfellow et. al](https://arxiv.org/abs/1412.6572), they explain the idea behind adversarial examples and propose a method called Fast Gradient Sign Method  (FGSM) to generate such examples that "fool" a MLP. The fundamental idea behind this method is to modify a data point $x$ by adding a small perturbation obtained by computing the weighted sign of the derivative of the classification function. This can be mathematically expressed as: \
-$x' = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
-Where $x'$ is the adversarial example, that is misclassified by $C$ with $C(x) = y\ \And\ C(x') \neq y_i$. The process is illustrated below.
+$x^\prime = x + \epsilon \cdot sign (\nabla_x J(f_\theta(x,y)))$ \
+Where $x^\prime$ is the adversarial example, that is misclassified by $C$ with $C(x) = y\ \And\ C(x^\prime) \neq y$. The process is illustrated below.
 <p align="center">
 <img src="docs/readme_pictures/FGSM_illustration.jpg" alt="Illustration of FGSM" width = 500/>
 <p/>
-The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x'$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x'$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Related work indicates that the misclassification is a result of the pixel fluctuation/noise added to $x$.
+
+The original data point, depicted as orange orange, is perturbated based on the gradient  (indicated by the arrow) and falls within the red shaded region. The orange dot is classified as a rectangle despite being an orange data point. The red area represents the disparity between the true and learned classification boundary. To minimize the difference between $x$ and $x^\prime$ the perturbation is weighted with $\epsilon$. Therefore the data sample $x^\prime$ looks similar to $x$. Although the FGSM is utilized as a regularization method, adding the perturbed data into the training dataset can leads to a decrease in classification accuracy. Related work indicates that the misclassification is a result of the pixel fluctuation/noise added to $x^\prime$.
 
 ### Concept Idea
 
-The concept of ALVA is to leverage the principles of FGSM as a guide to generate new and unseen data. Instead of perturbing the original data sample $x$, the latent vector $z$ of the generative model is manipulated (in this example, we use the generator of a GAN structure). The new data is the $x'=G(z')$, while a misclassification of $x'=G(z')$, where $C(x') \neq y$ is described as successful attack. This leads to following adaption of the FGSM formula: \
-$z' = z + \epsilon \cdot sign(\nabla_z J(f_\theta(z, y)))$ \
-Starting from an arbitrary latent vector $z$, we first create a data sample $x$ (Or $(x,y)$ if the generator is conditional) using a generative model. Afterwards we perturbate the latent vector with formula mentioned earlier to obtain $z'$. Using this perturbated latent vector, we generate a new data sample $x'$with the generative model.
+The concept of ALVA is to leverage the principles of FGSM as a guide to generate new and unseen data. Instead of perturbing the original data sample $x$, the latent vector $z$ of the generative model is manipulated (in this example, we use the generator of a GAN structure). The new data is the $x^\prime=G(z^\prime)$, while a misclassification of $x^\prime=G(z^\prime)$, where $C(x^\prime) \neq y$ is described as successful attack. This leads to following adaption of the FGSM formula: \
+$z^\prime = z + \epsilon \cdot sign(\nabla_z J(f_\theta(z, y)))$ \
+Starting from an arbitrary latent vector $z$, we first create a data sample $x$ (Or $(x,y)$ if the generator is conditional) using a generative model. Afterwards we perturbate the latent vector with formula mentioned earlier to obtain $z^\prime$. Using this perturbated latent vector, we generate a new data sample $x^\prime$with the generative model.
 
 ___
 
