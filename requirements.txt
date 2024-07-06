@@ -2,7 +2,7 @@ antlr4-python3-runtime==4.9.3
 asttokens==2.2.1
 backcall==0.2.0
 backports.functools-lru-cache==1.6.4
-certifi==2023.7.22
+certifi==2024.7.4
 charset-normalizer==2.1.1
 colorama==0.4.6
 contourpy==1.0.5
